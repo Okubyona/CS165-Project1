@@ -1,3 +1,4 @@
 *.gch
 *.txt
 build/
+project_files
