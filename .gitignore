@@ -2,3 +2,5 @@
 *.txt
 build/
 project_files
+cryptopp/
+openssl-1.1.1i/
