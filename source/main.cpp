@@ -40,12 +40,11 @@ int main() {
     // ASCII lowercase range: 97 - 122
     // by calling the bruteForce() function
 
-    std::string testHash = intermediateZero(magic, "zhgnnd", "hfT7jp2q");
-    testHash = loop(testHash, "zhgnnd", "hfT7jp2q");
-    testHash = finalize(testHash);
+    std::string testHash = hashGen(magic, "zhgnnd" ,"hfT7jp2q");
 
-    std::cout << testHash << std::endl;
-    std::cout << "cringe" << std::endl;
+    if (testHash == "wPwz7GC6xLt9eQZ9eJkaq.") {
+        std::cout << "I've done it\n";
+    }
 
     return 0;
 }
@@ -177,4 +176,15 @@ std::string toBase64(std::string hash, unsigned int x, unsigned int n) {
     }
 
     return ret;
+}
+
+std::string hashGen(std::string magic, std::string password, std::string salt) {
+    std::string h = intermediateZero(magic, password, salt);
+
+    // h is currently the intermediateZero
+    h = loop(h, password, salt);
+    // h is currently the Intermediate_1000
+    h = finalize(h);
+    // h is now the finalized hash
+    return h;
 }
