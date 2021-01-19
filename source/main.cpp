@@ -19,11 +19,22 @@ std::string FinalSum(/*TODO*/);
 void bruteForce(/*TODO*/);
 
 
+// Compute the alternate sum, that is: md5(password + salt + password)
+std::string alternateSum(std::string &password, std::string &salt);
+// Compute the Intermediate_0 sum
+std::string intermediateZero(std::string magic, std::string &password, std::string & salt);
+// Compute the Intermediate_1000 sum
+std::string FinalSum(/*TODO*/);
+// Run the MD5 algorithm against all lowercase characters
+void bruteForce(/*TODO*/);
+
+
 int main() {
     std::string hash, magic, salt;
     // Hash for team32
     hash  = "zS6RayXs77bfZxpHqC1ur0";
     magic = "$1$";
+<<<<<<< HEAD
     salt  = "4fTgjp6q";
 
     std::string alternate = alternateSum("zhgnnd", "hfT7jp2q");
@@ -38,12 +49,19 @@ int main() {
     // Call at least 13 threads to check all possible 26^6 combinations
     // by calling the bruteForce() function
 
+=======
+    salt  = "4fTgjp6q"
+    // Call at least 13 threads to check all possible 26^6 combinations
+    // by calling the bruteForce() function
+
+>>>>>>> b7b118d57fffc04b8192471880bd95c3bea9212c
     /* TODO */
 
     return 0;
 }
 
 // Compute the alternate sum, that is: md5(password + salt + password)
+<<<<<<< HEAD
 std::string alternateSum(std::string password, std::string salt) {
     std::string alternateSum = md5(password + salt + password);
     return alternateSum;
@@ -54,6 +72,17 @@ std::string intermediateZero(std::string magic, std::string password, std::strin
     // Will contain the Intermediate_0 string
     std::string result = "";
     std::string alternate = alternateSum(password, salt);
+=======
+std::string alternateSum(std::string &password, std::string &salt) {
+    return md5(password + salt + password);
+}
+
+// Compute the Intermediate_0 sum
+std::string intermediateZero(std::string magic, std::string &password, std::string salt) {
+    // Will contain the Intermediate_0 string
+    std::string result = "";
+    std::string alternateSum = alternateSum(password, salt);
+>>>>>>> b7b118d57fffc04b8192471880bd95c3bea9212c
     int length = password.size();
 
     // Completes steps 1 through 3
@@ -62,8 +91,13 @@ std::string intermediateZero(std::string magic, std::string password, std::strin
     // Step 4
     // length(password) bytes of the alternateSum, repeated as necessary
     while (length > 0) {
+<<<<<<< HEAD
         result = result + alternate.substr(0, std::min(alternate.size(), password.size()));
         length -= alternate.size();
+=======
+        result = result + alternateSum.substr(0, std::min(alternateSum.size(), password.size()))
+        length -= alternateSum.size();
+>>>>>>> b7b118d57fffc04b8192471880bd95c3bea9212c
     }
 
     // Step 5
@@ -79,6 +113,7 @@ std::string intermediateZero(std::string magic, std::string password, std::strin
             result += password[0];
         }
     }
+<<<<<<< HEAD
     // Returns the intermediateZero string where each character is its hex escape
     return md5(result);
 }
@@ -103,4 +138,8 @@ std::string convertMD5(std::string intermediateZero) {
     }
 
     return convert;
+=======
+
+    return md5(result);
+>>>>>>> b7b118d57fffc04b8192471880bd95c3bea9212c
 }
