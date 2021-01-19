@@ -6,7 +6,9 @@
 #include <time.h>   // Used to track the amount of iterations per second
 #include "md5.h"
 
-
+// Converts all characters in the given string to hexadecimal in the
+// form "\xed\x7a\x53\x7\x58\x8e\x49\xed\x3a..." depending on the input string
+std::string convertMD5(std::string intermediateZero);
 // Compute the alternate sum, that is: md5(password + salt + password)
 std::string alternateSum(std::string password, std::string salt);
 // Compute the Intermediate_0 sum
@@ -79,4 +81,26 @@ std::string intermediateZero(std::string magic, std::string password, std::strin
     }
     // Returns the intermediateZero string where each character is its hex escape
     return md5(result);
+}
+
+// Converts all characters in the given string to hexadecimal in the
+// form "\xed\x7a\x53\x7\x58\x8e\x49\xed\x3a..." depending on the input string
+std::string convertMD5(std::string intermediateZero) {
+    std::string convert = "";
+    std::string hexChar;
+    char hexCharArr[hexChar.size() + 1];
+    int asciiChar;
+
+    for (int i = 0; i < intermediateZero.size() - 1; i += 2) {
+        // grabs hex code from intermediateZero
+        hexChar = intermediateZero.substr(i, 2);
+        strcpy(hexCharArr, hexChar.c_str());
+        // grabs decimal ascii number from hex value in hexCharArr
+        asciiChar = (int)(strtol(hexCharArr, NULL, 16));
+        convert += asciiChar;
+        // output statement to check if conversion process is correct
+        // printf("%02x", asciiChar);
+    }
+
+    return convert;
 }
