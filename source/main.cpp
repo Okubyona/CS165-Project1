@@ -41,6 +41,7 @@ int main() {
     // by calling the bruteForce() function
 
     std::string testHash = intermediateZero(magic, "zhgnnd", "hfT7jp2q");
+    testHash = loop(testHash, "zhgnnd", "hfT7jp2q");
 
 
     return 0;
@@ -64,9 +65,9 @@ std::string convertMD5(std::string intermediateZero) {
         convert += character;
         // output statement to check if conversion process is correct
         // std::cout << convert << "\n";
-        printf("%02x", asciiVal);
+        //printf("%02x", asciiVal);
     }
-    std::cout << std::endl;
+    //std::cout << std::endl;
 
     return convert;
 }
@@ -113,4 +114,26 @@ std::string intermediateZero(std::string magic, std::string password, std::strin
     intermediate = convertMD5(intermediate);
 
     return intermediate;
+}
+
+// Compute Intermediate_1000
+std::string loop(std::string intermediateZero, std::string password, std::string salt) {
+    std::string temp = "";
+
+    for (unsigned int i = 0; i < 1000; ++i) {
+        temp = "";
+        if (i & 1) { temp += password; }
+        else { temp += intermediateZero; }
+
+        if (i % 3 != 0) { temp += salt; }
+
+        if (i % 7 != 0) { temp += password; }
+
+        if (i & 1) { temp += intermediateZero; }
+        else { temp += password; }
+
+        intermediateZero = md5(temp);
+        intermediateZero = convertMD5(intermediateZero);
+    }
+    return intermediateZero;
 }
