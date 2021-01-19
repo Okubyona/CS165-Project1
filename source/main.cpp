@@ -42,7 +42,10 @@ int main() {
 
     std::string testHash = intermediateZero(magic, "zhgnnd", "hfT7jp2q");
     testHash = loop(testHash, "zhgnnd", "hfT7jp2q");
+    testHash = finalize(testHash);
 
+    std::cout << testHash << std::endl;
+    std::cout << "cringe" << std::endl;
 
     return 0;
 }
@@ -136,4 +139,42 @@ std::string loop(std::string intermediateZero, std::string password, std::string
         intermediateZero = convertMD5(intermediateZero);
     }
     return intermediateZero;
+}
+
+// Compute the final intermediate
+std::string finalize(std::string finalSum) {
+    std::string finalFinalSum = "";
+    finalFinalSum += toBase64(finalSum, 0, 6, 12, 4);
+    finalFinalSum += toBase64(finalSum, 1, 7, 13, 4);
+    finalFinalSum += toBase64(finalSum, 2, 8, 14, 4);
+    finalFinalSum += toBase64(finalSum, 3, 9, 15, 4);
+    finalFinalSum += toBase64(finalSum, 4, 10, 5, 4);
+    finalFinalSum += toBase64(finalSum, 11, 2);
+
+    return finalFinalSum;
+}
+
+std::string toBase64(std::string hash, unsigned int x, unsigned int y, unsigned int z, int n) {
+    unsigned int h = ((unsigned char)hash[x] << 16) | ((unsigned char)hash[y] << 8) | ((unsigned char)hash[z]);
+    std::string ret;
+
+
+    for (int i = 1; i <= 4; ++i) {
+        ret += base64[(h & 0x3f)];
+        h >>= 6;
+    }
+
+    return ret;
+}
+
+std::string toBase64(std::string hash, unsigned int x, unsigned int n) {
+    unsigned int h = (unsigned char)hash[x];
+    std::string ret = "";
+
+    for (int i = 1; i <= 2; ++i) {
+        ret += base64[(h & 0x3f)];
+        h >>= 6;
+    }
+
+    return ret;
 }
